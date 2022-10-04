@@ -8,7 +8,7 @@ QR code image generator for UCSD JSA's Language Table event committee
 1. Open the link above in desktop (not mobile) Safari, Chrome, or Firefox (update your browser if it doesn't work)
 2. Make customizations to the links, week, quarter, etc. as needed
 3. Click the hide (`◀︎`) button to hide the customization panel
-4. Inspect Element (google if you don't know how to do this in your browser)
+4. **Inspect Element** (google if you don't know how to do this in your browser)
 5. Find the `<div id="container">` element...
     - (the full tree is `<html>`→`<body>`→`<div id="super-container">`→`<div id="container">`)
     - (it's also marked by a very noticeable comment above it)
