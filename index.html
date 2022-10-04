@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: 'Avenir Next', sans-serif;
+            background-color: #101010;
+            /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+        }
+
+        .display-text {
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.5em;
+        }
+
+        h1.display-text {
+            font-size: 2.5rem;
+        }
+
+        .title-small {
+            font-size: 2rem;
+        }
+
+        p.display-text {
+            font-size: 1.5em;
+        }
+
+        p.no-spacing-top {
+            margin-top: -0.5em;
+        }
+
+        .title-thin {
+            font-weight: 300;
+        }
+
+        .flex-container-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-container-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-container-row>* {
+            margin: 12px;
+        }
+
+        .flex-container-column>* {
+            margin: 12px;
+        }
+
+        #super-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .filler {
+            flex: 1;
+        }
+
+        #container {
+            width: 589.5px;
+            height: 1278px;
+            margin: auto;
+            flex-direction: column;
+            background-color: #c03060;
+            background: linear-gradient(30deg, #b02050 50%, #c03060 50%);
+        }
+
+        .qrcode {
+            left: 0px;
+            top: 0px;
+            z-index: 0;
+            padding: 16px;
+            border-radius: 16px;
+            background-color: #ffffff;
+        }
+
+        .overlay {
+            z-index: 9999;
+            position: absolute;
+            background-color: #ffffff;
+        }
+
+        .fill-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo {
+            width: 160px;
+            height: 160px;
+            margin: auto;
+        }
+
+        .options-hud {
+            position: fixed;
+            z-index: 99999;
+            color: #ffffff;
+        }
+
+        .options-hud > * {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            overflow: hidden;
+        }
+
+        #button-hud-show-hide {
+            margin-top: 8px;
+            border-radius: 24px;
+            color: #ffffff;
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            font-family: sans-serif;
+        }
+
+        .truncate {
+            width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .animated-hidable {
+            overflow: hidden;
+            opacity: 1;
+            transform: translateX(0px);
+            -webkit-transform: translateX(0px);
+            transition: transform 300ms 0ms, opacity 300ms 0ms;
+            -webkit-transition: transform 300ms 0ms, opacity 300ms 0ms;
+        }
+
+        .animated-hidable.animated-hidden {
+            opacity: 0;
+            transform: translateX(-100%);
+            -webkit-transform: translateX(-100%);
+            transition: transform 300ms 0ms, opacity 300ms 0ms;
+            -webkit-transition: transform 300ms 0ms, opacity 300ms 0ms;
+        }
+    </style>
+    <script type="text/javascript" src="https://vince14genius.github.io/3rd-party-js-dependencies/qrcode.js"></script>
+</head>
+
+<body>
+    <div class="options-hud">
+        <button id="button-hud-show-hide">◀︎</button>
+        <fieldset class="animated-hidable">
+            <legend>QR Code Options:</legend>
+
+            <div>
+                <input type="checkbox" id="two-qr-codes" name="two-qr-codes" checked>
+                <label for="two-qr-codes">Use 2 QR Codes</label>
+                <hr />
+                <h2>Link 1:</h2>
+                <p id="link-1" class="truncate">https://act.ucsd.edu/webreg2/start</p>
+                <p>
+                    <button id="change-link-1">Change Link 1</button>
+                </p>
+                <h2>Link 2:</h2>
+                <p id="link-2" class="truncate">https://www.google.com/</p>
+                <p>
+                    <button id="change-link-2">Change Link 2</button>
+                </p>
+                <hr />
+                <p>
+                    <button id="button-change-week">Change Week #</button>
+                </p>
+                <p>
+                    <button id="button-change-quarter">Change Quarter Name</button>
+                </p>
+            </div>
+        </fieldset>
+    </div>
+
+    <div id="super-container" class="flex-container-row">
+        <div class="filler"></div>
+        <!-- USE "CAPTURE NODE SCREENSHOT" ON THIS ELEMENT ↓ -->
+        <div id="container" class="flex-container-column">
+            <div class="filler flex-container-row">
+                <img class="logo" src="images/logo-bg-red-500.png" />
+            </div>
+            <div id="qrcode1" class="qrcode flex-container-row">
+                <div class="overlay">
+                    <img class="fill-image" src="images/google-docs-icon.png" />
+                </div>
+            </div>
+            <div id="qrcode2" class="qrcode flex-container-row">
+                <div class="overlay">
+                    <img class="fill-image" src="images/website-icon.png" />
+                </div>
+            </div>
+            <div class="filler flex-container-row">
+                <div class="filler">
+                    <h1 class="display-text"><span class="title-thin title-small">Language Table</span><br> - Week <span
+                            id="week-number">12</span> Docs -</h1>
+                    <p id="quarter-name" class="display-text no-spacing-top">FA19</p>
+                </div>
+            </div>
+        </div>
+        <div class="filler"></div>
+    </div>
+
+    <script type="text/javascript">
+        const qrCodeSize = 320;
+        const overlaySizeMultiplier = 0.428;
+
+        /**
+         * @type {QRCode}
+         */
+        let qrCode1 = new QRCode(document.getElementById("qrcode1"), {
+            text: "https://act.ucsd.edu/webreg2/start",
+            width: qrCodeSize,
+            height: qrCodeSize,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        /**
+         * @type {QRCode}
+         */
+        let qrCode2 = new QRCode(document.getElementById("qrcode2"), {
+            text: "https://www.google.com/",
+            width: qrCodeSize,
+            height: qrCodeSize,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        function resizeOverlays() {
+            for (let overlay of document.getElementsByClassName("overlay")) {
+                overlay.style.width = `${qrCodeSize * overlaySizeMultiplier}px`;
+                overlay.style.height = `${qrCodeSize * overlaySizeMultiplier}px`;
+            }
+        }
+        resizeOverlays();
+
+        const twoQRCodesCheckbox = document.getElementById("two-qr-codes");
+        const qrCode2Container = document.getElementById("qrcode2");
+        twoQRCodesCheckbox.addEventListener("change", () => {
+            if (twoQRCodesCheckbox.checked) {
+                qrCode2.makeCode(document.getElementById("link-2").innerText);
+                qrCode2Container.style.display = "flex";
+                resizeOverlays();
+            } else {
+                qrCode2Container.style.display = "none";
+            }
+        });
+
+        // update the week number
+        const weekNumberElement = document.getElementById("week-number");
+        const buttonChangeWeek = document.getElementById("button-change-week");
+        buttonChangeWeek.addEventListener("click", () => {
+            const newWeekNumber = prompt("Enter the new week number:", weekNumberElement.innerText);
+            if (newWeekNumber) {
+                weekNumberElement.innerText = newWeekNumber;
+            }
+        });
+
+        // update the quarter name
+        const quarterNameElement = document.getElementById("quarter-name");
+        const buttonChangeQuarter = document.getElementById("button-change-quarter");
+        buttonChangeQuarter.addEventListener("click", () => {
+            const newQuarterName = prompt("Enter the new quarter name:", quarterNameElement.innerText);
+            if (newQuarterName) {
+                quarterNameElement.innerText = newQuarterName;
+            }
+        });
+
+        // update link 1
+        const link1Element = document.getElementById("link-1");
+        const buttonChangeLink1 = document.getElementById("change-link-1");
+        buttonChangeLink1.addEventListener("click", () => {
+            const newLink1 = prompt("Enter the new link 1:", link1Element.innerText);
+            if (newLink1) {
+                link1Element.innerText = newLink1;
+                qrCode1.makeCode(newLink1);
+            }
+        });
+
+        // update link 2
+        const link2Element = document.getElementById("link-2");
+        const buttonChangeLink2 = document.getElementById("change-link-2");
+        buttonChangeLink2.addEventListener("click", () => {
+            const newLink2 = prompt("Enter the new link 2:", link2Element.innerText);
+            if (newLink2) {
+                link2Element.innerText = newLink2;
+                qrCode2.makeCode(newLink2);
+            }
+        });
+
+        // show/hide HUD
+        const hud = document.querySelector(".options-hud fieldset");
+        const buttonShowHideHUD = document.getElementById("button-hud-show-hide");
+        buttonShowHideHUD.addEventListener("click", () => {
+            if (hud.classList.contains("animated-hidden")) {
+                hud.classList.remove("animated-hidden");
+                buttonShowHideHUD.innerText = "◀︎";
+            } else {
+                hud.classList.add("animated-hidden");
+                buttonShowHideHUD.innerText = "▶︎";
+            }
+        });
+
+    </script>
+</body>
+
+</html>
