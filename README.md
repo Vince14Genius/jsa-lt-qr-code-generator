@@ -18,6 +18,8 @@ QR code image generator for UCSD JSA's Language Table event committee
 
 ## Customizability
 
+(unchecked = TODO)
+
  - [x] number of QR codes (1 or 2)
  - [x] link #1
  - [x] link #2
