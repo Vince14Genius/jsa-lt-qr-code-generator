@@ -26,5 +26,11 @@ QR code image generator for UCSD JSA's Language Table event committee
  - [x] link #2
  - [x] week # into the quarter (e.g. week `5`)
  - [x] quarter name (e.g. `FA22`)
- - [ ] background color
+ - [x] background color
  - [ ] icon images at the center of the QR codes
+ 
+# Convenience features
+
+(unchecked = TODO)
+
+ - [ ] download generated PNG
