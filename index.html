@@ -3,6 +3,11 @@
 
 <head>
     <style>
+        :root {
+            --primary-color: #c03060;
+            --secondary-color: #b02050;
+        }
+
         body {
             margin: 0;
             padding: 16px;
@@ -73,7 +78,7 @@
             margin: auto;
             flex-direction: column;
             background-color: #c03060;
-            background: linear-gradient(30deg, #b02050 50%, #c03060 50%);
+            background: linear-gradient(30deg, var(--secondary-color) 50%, var(--primary-color) 50%);
         }
 
         .qrcode {
@@ -179,6 +184,15 @@
                 </p>
                 <p>
                     <button id="button-change-quarter">Change Quarter Name</button>
+                </p>
+                <hr />
+                <p>
+                    <input type="color" id="color-1" name="color-1" value="#c03060">
+                    <label for="color-1">Background Color #1</label>
+                </p>
+                <p>
+                    <input type="color" id="color-2" name="color-2" value="#b02050">
+                    <label for="color-2">Background Color #2</label>
                 </p>
             </div>
         </fieldset>
@@ -313,6 +327,16 @@
                 hud.classList.add("animated-hidden");
                 buttonShowHideHUD.innerText = "▶︎";
             }
+        });
+
+        // change background color
+        const primaryColorInput = document.getElementById("color-1");
+        const secondaryColorInput = document.getElementById("color-2");
+        primaryColorInput.addEventListener("change", () => {
+            document.documentElement.style.setProperty("--primary-color", primaryColorInput.value);
+        });
+        secondaryColorInput.addEventListener("change", () => {
+            document.documentElement.style.setProperty("--secondary-color", secondaryColorInput.value);
         });
 
     </script>
