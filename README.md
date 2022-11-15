@@ -7,7 +7,7 @@ QR code image generator for UCSD JSA's Language Table event committee
 
 1. Open the link above in desktop (not mobile) Safari, Chrome, or Firefox (update your browser if it doesn't work)
 2. Make customizations to the links, week, quarter, etc. as needed
-3. Click on the **"Export PNG"** button on the bottom of the panel to download
+3. Click on the **"Download Image"** button on the bottom of the panel to download
 
 ## ~~Usage~~ (previously)
 
