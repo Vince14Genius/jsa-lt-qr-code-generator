@@ -3,170 +3,14 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="main.css">
     <title>JSA LT QR Generator</title>
-    <style>
-        :root {
-            --primary-color: #c03060;
-            --secondary-color: #b02050;
-        }
-
-        body {
-            margin: 0;
-            padding: 16px;
-            font-family: 'Avenir Next', sans-serif;
-            background-color: #101010;
-            /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
-        }
-
-        .display-text {
-            color: #ffffff;
-            text-align: center;
-            line-height: 1.5em;
-        }
-
-        h1.display-text {
-            font-size: 2.5rem;
-        }
-
-        .title-small {
-            font-size: 2rem;
-        }
-
-        p.display-text {
-            font-size: 1.5em;
-        }
-
-        p.no-spacing-top {
-            margin-top: -0.5em;
-        }
-
-        .title-thin {
-            font-weight: 300;
-        }
-
-        .flex-container-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .flex-container-column {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .flex-container-row>* {
-            margin: 12px;
-        }
-
-        .flex-container-column>* {
-            margin: 12px;
-        }
-
-        #super-container {
-            width: 100%;
-            height: 100%;
-        }
-
-        .filler {
-            flex: 1;
-        }
-
-        #container {
-            width: 589.5px;
-            height: 1278px;
-            margin: auto;
-            flex-direction: column;
-            background-color: #c03060;
-            background: linear-gradient(30deg, var(--secondary-color) 50%, var(--primary-color) 50%);
-        }
-
-        #main-canvas {
-            display: none;
-            width: 589.5px;
-            height: 1278px;
-        }
-
-        .qrcode {
-            left: 0px;
-            top: 0px;
-            z-index: 0;
-            padding: 16px;
-            border-radius: 16px;
-            background-color: #ffffff;
-        }
-
-        .overlay {
-            z-index: 9999;
-            position: absolute;
-            background-color: #ffffff;
-        }
-
-        .fill-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .logo {
-            width: 160px;
-            height: 160px;
-            margin: auto;
-        }
-
-        .options-hud {
-            position: fixed;
-            z-index: 99999;
-            color: #ffffff;
-        }
-
-        .options-hud > * {
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            overflow: hidden;
-        }
-
-        #button-hud-show-hide {
-            margin-top: 8px;
-            border-radius: 24px;
-            color: #ffffff;
-            font-size: 24px;
-            width: 48px;
-            height: 48px;
-            font-family: sans-serif;
-        }
-
-        .truncate {
-            width: 250px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .animated-hidable {
-            overflow: hidden;
-            opacity: 1;
-            transform: translateX(0px);
-            -webkit-transform: translateX(0px);
-            transition: transform 300ms 0ms, opacity 300ms 0ms;
-            -webkit-transition: transform 300ms 0ms, opacity 300ms 0ms;
-        }
-
-        .animated-hidable.animated-hidden {
-            opacity: 0;
-            transform: translateX(-100%);
-            -webkit-transform: translateX(-100%);
-            transition: transform 300ms 0ms, opacity 300ms 0ms;
-            -webkit-transition: transform 300ms 0ms, opacity 300ms 0ms;
-        }
-    </style>
     <script type="text/javascript" src="https://vince14genius.github.io/3rd-party-js-dependencies/qrcode.js"></script>
+    <script type="text/javascript" src="scripts/generate-image.js"></script>
 </head>
 
 <body>
+    <!-- The HUD displaying customization options -->
     <div class="options-hud">
         <button id="button-hud-show-hide">◀︎</button>
         <fieldset class="animated-hidable">
@@ -212,6 +56,7 @@
         </fieldset>
     </div>
 
+    <!-- The preview for the design containing the QR code(s) -->
     <div id="super-container" class="flex-container-row">
         <div class="filler"></div>
 
@@ -238,6 +83,7 @@
             </div>
         </div>
 
+        <!-- A hidden canvas  -->
         <canvas id="main-canvas" width="1179px" height="2556px">
             Your browser does not support the canvas element.
         </canvas>
@@ -365,120 +211,8 @@
 
         const buttonExportPNG = document.getElementById("button-export-png");
         buttonExportPNG.addEventListener("click", () => {
-            draw();
+            createDownloadableImage();
         });
-
-        function draw() {
-            const canvas = document.getElementById("main-canvas");
-            const ctx = canvas.getContext("2d");
-            const container = document.getElementById("container");
-
-            // draw the primary color background
-            ctx.fillStyle = primaryColorInput.value;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // draw the secondary color trapezoid
-            const offset = (1179 * Math.atan(Math.PI / 6) / 2);
-            ctx.beginPath();
-            ctx.fillStyle = secondaryColorInput.value;
-            ctx.moveTo(0, 1278 - offset);
-            ctx.lineTo(1179, 1278 + offset);
-            ctx.lineTo(1179, 2556);
-            ctx.lineTo(0, 2556);
-            ctx.closePath();
-            ctx.fill();
-            
-            // draw the logo
-            const logo = document.getElementsByClassName("logo")[0];
-            const logoTop = logo.getBoundingClientRect().top - container.getBoundingClientRect().top;
-            ctx.drawImage(logo, 589.5 - 160, logoTop * 2, 320, 320);
-
-            // draw the QR codes & their containers
-            const qrCodeContainers = document.getElementsByClassName("qrcode");
-            for (let qrCodeContainer of qrCodeContainers) {
-                const qrCodeContainerTop = qrCodeContainer.getBoundingClientRect().top - container.getBoundingClientRect().top;
-                const qrCodeContainerLeft = qrCodeContainer.getBoundingClientRect().left - container.getBoundingClientRect().left;
-                const qrCodeContainerWidth = qrCodeContainer.getBoundingClientRect().width;
-                const qrCodeContainerHeight = qrCodeContainer.getBoundingClientRect().height;
-
-                ctx.beginPath();
-                ctx.roundRect(qrCodeContainerLeft * 2, qrCodeContainerTop * 2, qrCodeContainerWidth * 2, qrCodeContainerHeight * 2, 32);
-                ctx.fillStyle = "white";
-                ctx.closePath();
-                ctx.fill();
-
-                // draw the embedded imgs
-                const qrCodeImgs = qrCodeContainer.getElementsByTagName("img");
-
-                function drawEnbeddedImg(qrCodeImg) {
-                    const qrCodeImgTop = qrCodeImg.getBoundingClientRect().top - container.getBoundingClientRect().top;
-                    const qrCodeImgLeft = qrCodeImg.getBoundingClientRect().left - container.getBoundingClientRect().left;
-
-                    ctx.drawImage(qrCodeImg, qrCodeImgLeft * 2, qrCodeImgTop * 2, qrCodeImg.getBoundingClientRect().width * 2, qrCodeImg.getBoundingClientRect().height * 2);
-                }
-
-                drawEnbeddedImg(qrCodeImgs[1]);
-
-                // draw overlay rect
-                const overlay = qrCodeContainer.getElementsByClassName("overlay")[0];
-                const overlayTop = overlay.getBoundingClientRect().top - container.getBoundingClientRect().top;
-                const overlayLeft = overlay.getBoundingClientRect().left - container.getBoundingClientRect().left;
-                const overlayWidth = overlay.getBoundingClientRect().width;
-                const overlayHeight = overlay.getBoundingClientRect().height;
-                ctx.fillStyle = "white";
-                ctx.fillRect(overlayLeft * 2, overlayTop * 2, overlayWidth * 2, overlayHeight * 2);
-
-                drawEnbeddedImg(qrCodeImgs[0]);
-            }
-
-            // draw all the text at the correct relative positions
-            const textElements = document.getElementsByClassName("text");
-            for (let textElement of textElements) {
-                const textTop = textElement.getBoundingClientRect().top - container.getBoundingClientRect().top;
-                const textLeft = textElement.getBoundingClientRect().left - container.getBoundingClientRect().left;
-
-                // get center x and y
-                const textCenterX = textLeft + textElement.getBoundingClientRect().width / 2;
-                const textCenterY = textTop + textElement.getBoundingClientRect().height / 2;
-
-                ctx.font = window.getComputedStyle(textElement).font;
-                console.log(ctx.font);
-
-                // retrieve the font weight
-                const fontWeight = window.getComputedStyle(textElement).fontWeight;
-
-                // double the font size
-                const fontSize = parseFloat(window.getComputedStyle(textElement).fontSize);
-                ctx.font = ctx.font.replace(fontSize + "px", fontSize * 2 + "px");
-                console.log(ctx.font);
-
-                // add the font weight to the front
-                ctx.font = fontWeight + " " + ctx.font;
-                
-                ctx.fillStyle = window.getComputedStyle(textElement).color;
-                ctx.textAlign = 'center';
-                ctx.fillText(textElement.innerText, textCenterX * 2, textCenterY * 2);
-            }
-
-            /*
-            // hide container and show canvas
-            container.style.display = "none";
-            canvas.style.display = "block";
-            */
-
-            // get week number
-            const weekNumber = document.getElementById("week-number").innerText;
-
-            // get quarter name
-            const quarterName = document.getElementById("quarter-name").innerText.toLowerCase();
-
-            // download the image
-            const a = document.createElement("a");
-            a.href = canvas.toDataURL("image/png");
-            a.download = `lt-qr-${quarterName}-wk${weekNumber}.png`;
-            a.click();
-        }
-
     </script>
 </body>
 
