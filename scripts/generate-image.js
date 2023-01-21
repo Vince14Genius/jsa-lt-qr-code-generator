@@ -40,14 +40,14 @@ function createDownloadableImage() {
         // draw the embedded imgs
         const qrCodeImgs = qrCodeContainer.getElementsByTagName("img");
 
-        function drawEnbeddedImg(qrCodeImg) {
+        function drawEmbeddedImg(qrCodeImg) {
             const qrCodeImgTop = qrCodeImg.getBoundingClientRect().top - container.getBoundingClientRect().top;
             const qrCodeImgLeft = qrCodeImg.getBoundingClientRect().left - container.getBoundingClientRect().left;
 
             ctx.drawImage(qrCodeImg, qrCodeImgLeft * 2, qrCodeImgTop * 2, qrCodeImg.getBoundingClientRect().width * 2, qrCodeImg.getBoundingClientRect().height * 2);
         }
 
-        drawEnbeddedImg(qrCodeImgs[1]);
+        drawEmbeddedImg(qrCodeImgs[1]);
 
         // draw overlay rect
         const overlay = qrCodeContainer.getElementsByClassName("overlay")[0];
@@ -58,7 +58,7 @@ function createDownloadableImage() {
         ctx.fillStyle = "white";
         ctx.fillRect(overlayLeft * 2, overlayTop * 2, overlayWidth * 2, overlayHeight * 2);
 
-        drawEnbeddedImg(qrCodeImgs[0]);
+        drawEmbeddedImg(qrCodeImgs[0]);
     }
 
     // draw all the text at the correct relative positions
