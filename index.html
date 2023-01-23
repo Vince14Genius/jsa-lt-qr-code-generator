@@ -17,21 +17,11 @@
             <legend>QR Code Options:</legend>
 
             <div>
-                <input type="checkbox" id="two-qr-codes" name="two-qr-codes">
-                <label for="two-qr-codes">Use 2 QR Codes</label>
-                <hr />
-                <h2>Link 1:</h2>
+                <h2>Link:</h2>
                 <p id="link-1" class="truncate">https://act.ucsd.edu/webreg2/start</p>
                 <p>
-                    <button id="change-link-1">Change Link 1</button>
+                    <button id="change-link-1">Change QR Code Link</button>
                 </p>
-                <div id="qr-code-2-settings" style="display: none;">
-                    <h2>Link 2:</h2>
-                    <p id="link-2" class="truncate">https://www.google.com/</p>
-                    <p>
-                        <button id="change-link-2">Change Link 2</button>
-                    </p>
-                </div>
                 <hr />
                 <p>
                     <button id="button-change-week">Change Week #</button>
@@ -61,25 +51,31 @@
         <div class="filler"></div>
 
         <div id="container" class="flex-container-column">
-            <div class="filler flex-container-row">
+            <div class="filler flex-container-column">
+                <div class="filler"></div>
+                <div class="filler"></div>
+                <div class="filler"></div>
+                <div class="filler"></div>
                 <img class="logo" src="images/logo-bg-red-500.png" />
+                <h1 class="display-text"><span class="title-thin title-small text">Language Table</span></h1>
+                <div class="filler"></div>
             </div>
             <div id="qrcode1" class="qrcode flex-container-row">
                 <div class="overlay">
                     <img class="fill-image" src="images/google-docs-icon.png" />
                 </div>
             </div>
-            <div id="qrcode2" class="qrcode flex-container-row">
-                <div class="overlay">
-                    <img class="fill-image" src="images/website-icon.png" />
-                </div>
-            </div>
-            <div class="filler flex-container-row">
+            <div class="filler flex-container-column">
                 <div class="filler">
-                    <h1 class="display-text"><span class="title-thin title-small text">Language Table</span><br><span class="text"> - Week <span
+                    <p class="display-text text instructions-text">If you have the Google Docs app,</p>
+                    <p class="display-text text instructions-text">turn on "Print layout" for the best experience.</p>
+                </div>
+                <div class="filler">
+                    <h1 class="display-text"><span class="text"> - Week <span
                             id="week-number">12</span> Docs -</span></h1>
                     <p id="quarter-name" class="display-text no-spacing-top text">FA19</p>
                 </div>
+                <div class="filler"></div>
             </div>
         </div>
 
@@ -107,18 +103,6 @@
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        /**
-         * @type {QRCode}
-         */
-        let qrCode2 = new QRCode(document.getElementById("qrcode2"), {
-            text: "https://www.google.com/",
-            width: qrCodeSize,
-            height: qrCodeSize,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-
         function resizeOverlays() {
             for (let overlay of document.getElementsByClassName("overlay")) {
                 overlay.style.width = `${qrCodeSize * overlaySizeMultiplier}px`;
@@ -126,21 +110,6 @@
             }
         }
         resizeOverlays();
-
-        const twoQRCodesCheckbox = document.getElementById("two-qr-codes");
-        const qrCode2Container = document.getElementById("qrcode2");
-        qrCode2Container.style.display = "none"; // hide by default
-        twoQRCodesCheckbox.addEventListener("change", () => {
-            if (twoQRCodesCheckbox.checked) {
-                qrCode2.makeCode(document.getElementById("link-2").innerText);
-                qrCode2Container.style.display = "flex";
-                resizeOverlays();
-                document.getElementById("qr-code-2-settings").style.display = "block";
-            } else {
-                qrCode2Container.style.display = "none";
-                document.getElementById("qr-code-2-settings").style.display = "none";
-            }
-        });
 
         // update the week number
         const weekNumberElement = document.getElementById("week-number");
@@ -162,7 +131,7 @@
             }
         });
 
-        // update link 1
+        // update link
         const link1Element = document.getElementById("link-1");
         const buttonChangeLink1 = document.getElementById("change-link-1");
         buttonChangeLink1.addEventListener("click", () => {
@@ -170,17 +139,6 @@
             if (newLink1) {
                 link1Element.innerText = newLink1;
                 qrCode1.makeCode(newLink1);
-            }
-        });
-
-        // update link 2
-        const link2Element = document.getElementById("link-2");
-        const buttonChangeLink2 = document.getElementById("change-link-2");
-        buttonChangeLink2.addEventListener("click", () => {
-            const newLink2 = prompt("Enter the new link 2:", link2Element.innerText);
-            if (newLink2) {
-                link2Element.innerText = newLink2;
-                qrCode2.makeCode(newLink2);
             }
         });
 

@@ -33,8 +33,13 @@ p.no-spacing-top {
     margin-top: -0.5em;
 }
 
-.title-thin {
+.instructions-text {
     font-weight: 300;
+    line-height: 0.9rem;
+}
+
+.title-thin {
+    font-weight: normal;
 }
 
 .flex-container-row {
