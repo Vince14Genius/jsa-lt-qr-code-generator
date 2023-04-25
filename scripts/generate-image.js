@@ -80,7 +80,7 @@ function createDownloadableImage() {
         // double the font size
         const fontSizeString = window.getComputedStyle(textElement).fontSize;
         const fontSize = parseFloat(fontSizeString);
-        ctx.font = ctx.font.replace(fontSizeString, fontSize * 2 + "px");
+        ctx.font = ctx.font.replace(/[0-9][0-9]*.?[0.9]*px/, fontSize * 2 + "px");
         console.log(ctx.font);
 
         // add the font weight to the front
