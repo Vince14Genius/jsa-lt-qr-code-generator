@@ -1,6 +1,7 @@
 :root {
     --primary-color: #c03060;
     --secondary-color: #b02050;
+    --text-color: #ffffff;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 }
 
 .display-text {
-    color: #ffffff;
+    color: var(--text-color);
     text-align: center;
     line-height: 1.5em;
 }

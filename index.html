@@ -38,6 +38,10 @@
                     <input type="color" id="color-2" name="color-2" value="#b02050">
                     <label for="color-2">Background Color #2</label>
                 </p>
+                <p>
+                    <input type="color" id="text-color" name="text-color" value="#ffffff">
+                    <label for="text-color">Text Color</label>
+                </p>
                 <hr />
                 <p>
                     <button id="button-export-png"><strong>Download Image</strong></button>
@@ -158,11 +162,15 @@
         // change background color
         const primaryColorInput = document.getElementById("color-1");
         const secondaryColorInput = document.getElementById("color-2");
+        const textColorInput = document.getElementById("text-color");
         primaryColorInput.addEventListener("change", () => {
             document.documentElement.style.setProperty("--primary-color", primaryColorInput.value);
         });
         secondaryColorInput.addEventListener("change", () => {
             document.documentElement.style.setProperty("--secondary-color", secondaryColorInput.value);
+        });
+        textColorInput.addEventListener("change", () => {
+            document.documentElement.style.setProperty("--text-color", textColorInput.value);
         });
 
         // export to PNG
