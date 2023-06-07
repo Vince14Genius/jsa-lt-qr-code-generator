@@ -1,6 +1,7 @@
 :root {
     --primary-color: #c03060;
     --secondary-color: #b02050;
+    --text-color: #ffffff;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 }
 
 .display-text {
-    color: #ffffff;
+    color: var(--text-color);
     text-align: center;
     line-height: 1.5em;
 }
@@ -33,8 +34,13 @@ p.no-spacing-top {
     margin-top: -0.5em;
 }
 
-.title-thin {
+.instructions-text {
     font-weight: 300;
+    line-height: 0.9rem;
+}
+
+.title-thin {
+    font-weight: normal;
 }
 
 .flex-container-row {
